@@ -1,23 +1,38 @@
+using Newtonsoft.Json;
+
 namespace BBIT_Test_Exercises_House;
 
 public class Resident
 {
-    public string name;
-    public string surname;
-    public string id;
-    public DateTime dateOfBirth;
-    public string phoneNumber;
-    public string email;
-    public Apartment apartment;
+    [JsonProperty("name")]
+    public string Name { get; set; }
 
-    public Resident(string name, string surname, string id, DateTime dateOfBirth, string phoneNumber, string email, Apartment apartment)
+    [JsonProperty("surname")]
+    public string Surname { get; set; }
+
+    [JsonProperty("id")]
+    public string Id { get; set; }
+
+    [JsonProperty("dateOfBirth")]
+    public string DateOfBirth { get; set; }
+
+    [JsonProperty("phoneNumber")]
+    public string PhoneNumber { get; set; }
+
+    [JsonProperty("email")]
+    public string Email { get; set; }
+
+    [JsonProperty("apartment")]
+    public Apartment Apartment { get; set; }
+
+    public Resident(string name, string surname, string id, string dateOfBirth, string phoneNumber, string email, Apartment apartment)
     {
-        name = name;
-        surname = surname;
-        id = id;
-        dateOfBirth = dateOfBirth;
-        phoneNumber = phoneNumber;
-        email = email;
-        apartment = apartment;
+        Name = name;
+        Surname = surname;
+        Id = id;
+        DateOfBirth = dateOfBirth;
+        PhoneNumber = phoneNumber;
+        Email = email;
+        Apartment = apartment;
     }
 }

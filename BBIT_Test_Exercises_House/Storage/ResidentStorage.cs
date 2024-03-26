@@ -11,12 +11,12 @@ public class ResidentStorage
 
     public static Resident GetByName(string name)
     {
-        return _residents.FirstOrDefault(r => r.name == name);
+        return _residents.FirstOrDefault(r => r.Name == name);
     }
 
     public static void RemoveResident(Resident resident)
     {
-        var residentToRemove = _residents.FirstOrDefault(r => r.name == resident.name);
+        var residentToRemove = _residents.FirstOrDefault(r => r.Name == resident.Name);
         if (residentToRemove != null)
         {
             _residents.Remove(residentToRemove);
@@ -25,16 +25,16 @@ public class ResidentStorage
 
     public static void EditResident(Resident resident)
     {
-        var residentToEdit = _residents.FirstOrDefault(r => r.name == resident.name);
+        var residentToEdit = _residents.FirstOrDefault(r => r.Name == resident.Name);
         if (residentToEdit != null)
         {
-            residentToEdit.name = resident.name;
-            residentToEdit.apartment = resident.apartment;
-            residentToEdit.id = resident.id;
-            residentToEdit.email = resident.email;
-            residentToEdit.phoneNumber = resident.phoneNumber;
-            residentToEdit.surname = resident.surname;
-            residentToEdit.dateOfBirth = resident.dateOfBirth;
+            residentToEdit.Name = resident.Name;
+            residentToEdit.Apartment = resident.Apartment;
+            residentToEdit.Id = resident.Id;
+            residentToEdit.Email = resident.Email;
+            residentToEdit.PhoneNumber = resident.PhoneNumber;
+            residentToEdit.Surname = resident.Surname;
+            residentToEdit.DateOfBirth = resident.DateOfBirth;
         }
     }
 }

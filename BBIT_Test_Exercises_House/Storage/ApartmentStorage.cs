@@ -7,7 +7,7 @@ public class ApartmentStorage
 
     public static Apartment GetApartmentByNumber(int number)
     {
-        return _apartments.FirstOrDefault(apartment => apartment.number == number);
+        return _apartments.FirstOrDefault(apartment => apartment.Number == number);
     }
 
     public static void AddApartment(Apartment apartment)
@@ -22,15 +22,15 @@ public class ApartmentStorage
 
     public static void EditApartment(int number, Apartment apartment)
     {
-        var existingApartment = _apartments.FirstOrDefault(apartment => apartment.number == number);
+        var existingApartment = _apartments.FirstOrDefault(apartment => apartment.Number == number);
         if (existingApartment != null)
         {
-            existingApartment.floor = apartment.floor;
-            existingApartment.numberOfRooms = apartment.numberOfRooms;
-            existingApartment.numberOfResidents = apartment.numberOfResidents;
-            existingApartment.floorSpace = apartment.floorSpace;
-            existingApartment.livingSpace = apartment.livingSpace;
-            existingApartment.house = apartment.house;
+            existingApartment.Floor = apartment.Floor;
+            existingApartment.NumberOfRooms = apartment.NumberOfRooms;
+            existingApartment.NumberOfResidents = apartment.NumberOfResidents;
+            existingApartment.FloorSpace = apartment.FloorSpace;
+            existingApartment.LivingSpace = apartment.LivingSpace;
+            existingApartment.House = apartment.House;
         }
     }
 }
