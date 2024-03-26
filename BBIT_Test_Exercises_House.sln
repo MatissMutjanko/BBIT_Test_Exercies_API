@@ -1,0 +1,16 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BBIT_Test_Exercises_House", "BBIT_Test_Exercises_House\BBIT_Test_Exercises_House.csproj", "{688CD3A7-BA86-4D52-93E4-7B682E06C638}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{688CD3A7-BA86-4D52-93E4-7B682E06C638}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{688CD3A7-BA86-4D52-93E4-7B682E06C638}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{688CD3A7-BA86-4D52-93E4-7B682E06C638}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{688CD3A7-BA86-4D52-93E4-7B682E06C638}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

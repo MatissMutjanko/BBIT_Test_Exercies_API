@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\BBIT_Test_Exercises_House.props" />
+</Project>
