@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using Newtonsoft.Json;
 
 namespace BBIT_Test_Exercises_House;
@@ -9,9 +11,13 @@ public class Resident
 
     [JsonProperty("surname")]
     public string Surname { get; set; }
-
+    
+    [Key]
     [JsonProperty("id")]
-    public string Id { get; set; }
+    public int Id { get; set; }
+    
+    [JsonProperty("personalId")]
+    public string PersonalId{ get; set; }
 
     [JsonProperty("dateOfBirth")]
     public string DateOfBirth { get; set; }
@@ -22,17 +28,24 @@ public class Resident
     [JsonProperty("email")]
     public string Email { get; set; }
 
+    [ForeignKey("ApartmentId")]
     [JsonProperty("apartment")]
     public Apartment Apartment { get; set; }
+    
+    [JsonProperty("ApartmentId")]
+    public int ApartmentId { get; set; }
 
-    public Resident(string name, string surname, string id, string dateOfBirth, string phoneNumber, string email, Apartment apartment)
+    public bool isOwner { get; set; }
+
+    public Resident(int id, string name, string surname, string personalId, string dateOfBirth, string phoneNumber, string email, int apartmentId)
     {
         Name = name;
         Surname = surname;
         Id = id;
+        PersonalId = personalId;
         DateOfBirth = dateOfBirth;
         PhoneNumber = phoneNumber;
         Email = email;
-        Apartment = apartment;
+        ApartmentId = apartmentId;
     }
 }

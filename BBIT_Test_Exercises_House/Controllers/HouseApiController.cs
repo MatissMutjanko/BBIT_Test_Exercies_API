@@ -24,10 +24,12 @@ public class HouseApiController : ControllerBase
     [Route("house/{number}")]
     public IActionResult GetHouse(int number)
     {
+        var id = 1;
         var house = HouseStorage.GetHouseByNumber(number);
         if (house == null)
         {
-            var houseNew = new House(1, "mellenu", "riga", "Latvija", "1234");
+            var houseNew = new House(id,1, "mellenu", "riga", "Latvija", "1234");
+            id++;
             return Ok(houseNew);
         }
 

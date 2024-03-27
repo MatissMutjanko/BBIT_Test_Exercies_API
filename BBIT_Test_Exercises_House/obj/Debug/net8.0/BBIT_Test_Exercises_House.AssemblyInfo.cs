@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("BBIT_Test_Exercises_House")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+02905ed064d41b906f5c4f73a4c84194b811ae36")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+42d127c849b37ffad1efd1acc013caadf22e258f")]
 [assembly: System.Reflection.AssemblyProductAttribute("BBIT_Test_Exercises_House")]
 [assembly: System.Reflection.AssemblyTitleAttribute("BBIT_Test_Exercises_House")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
