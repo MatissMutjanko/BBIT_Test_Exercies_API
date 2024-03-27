@@ -6,15 +6,16 @@ namespace BBIT_Test_Exercises_House;
 
 public class Resident
 {
+    [Key] 
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+    [JsonProperty("id")]
+    public int Id { get; set; }
+    
     [JsonProperty("name")]
     public string Name { get; set; }
 
     [JsonProperty("surname")]
     public string Surname { get; set; }
-    
-    [Key]
-    [JsonProperty("id")]
-    public int Id { get; set; }
     
     [JsonProperty("personalId")]
     public string PersonalId{ get; set; }
@@ -28,24 +29,19 @@ public class Resident
     [JsonProperty("email")]
     public string Email { get; set; }
 
-    [ForeignKey("ApartmentId")]
-    [JsonProperty("apartment")]
-    public Apartment Apartment { get; set; }
-    
-    [JsonProperty("ApartmentId")]
-    public int ApartmentId { get; set; }
+    [JsonProperty("apartmentIds")]
+    public List<int> ApartmentIds { get; set; } = new List<int>();
 
-    public bool isOwner { get; set; }
+    public bool IsOwner { get; set; }
 
-    public Resident(int id, string name, string surname, string personalId, string dateOfBirth, string phoneNumber, string email, int apartmentId)
+    public Resident(string name, string surname, string personalId, string dateOfBirth, string phoneNumber, string email, bool isOwner)
     {
         Name = name;
         Surname = surname;
-        Id = id;
         PersonalId = personalId;
         DateOfBirth = dateOfBirth;
         PhoneNumber = phoneNumber;
         Email = email;
-        ApartmentId = apartmentId;
+        IsOwner = isOwner;
     }
 }

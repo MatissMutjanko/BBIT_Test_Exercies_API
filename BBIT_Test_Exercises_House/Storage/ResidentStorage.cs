@@ -29,7 +29,6 @@ public class ResidentStorage
         if (residentToEdit != null)
         {
             residentToEdit.Name = resident.Name;
-            residentToEdit.Apartment = resident.Apartment;
             residentToEdit.Id = resident.Id;
             residentToEdit.Email = resident.Email;
             residentToEdit.PhoneNumber = resident.PhoneNumber;

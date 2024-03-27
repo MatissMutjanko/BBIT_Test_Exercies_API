@@ -1,6 +1,5 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 
 namespace BBIT_Test_Exercises_House;
@@ -8,6 +7,7 @@ namespace BBIT_Test_Exercises_House;
 public class Apartment
 {
     [Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     [JsonProperty("Id")]
     public int Id { get; set; }
     
@@ -37,11 +37,9 @@ public class Apartment
     public House House { get; set; }
 
     public Apartment() { }
-
-    // Constructor with parameters
-    public Apartment(int id, int number, int floor, int numberOfRooms, int numberOfResidents, int floorSpace, int livingSpace, int houseId)
+    
+    public Apartment(int number, int floor, int numberOfRooms, int numberOfResidents, int floorSpace, int livingSpace, int houseId)
     {
-        Id = id;
         Number = number;
         Floor = floor;
         NumberOfRooms = numberOfRooms;
