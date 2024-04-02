@@ -1,4 +1,5 @@
 using BBIT_Test_Exercises_House.Components;
+using BBIT_Test_Exercises_House.DbContext;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,6 +11,7 @@ builder.Services.AddEndpointsApiExplorer();
 
 
 var app = builder.Build();
+var Db = new AppDbContext();
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

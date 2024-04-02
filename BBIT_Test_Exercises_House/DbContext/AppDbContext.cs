@@ -29,20 +29,20 @@ public class AppDbContext : Microsoft.EntityFrameworkCore.DbContext
     {
         // Add initial data using Entity Framework Core APIs
         modelBuilder.Entity<House>().HasData(
-            new House(1,1, "Brivibas", "Riga", "Latvia", "1446"),
-            new House(2,2, "Stirnu", "Riga", "Latvia", "2456")
+            new House(1, "Brivibas", "Riga", "Latvia", "1446"),
+            new House(2, "Stirnu", "Riga", "Latvia", "2456")
         );
         modelBuilder.Entity<Apartment>().HasData(
-            new Apartment(1, 1, 1, 2, 2, 400, 250, 1),
-            new Apartment(2, 2, 2, 2, 2, 400, 250, 1),
-            new Apartment(3, 1, 1, 2, 2, 400, 250, 2),
-            new Apartment(4, 2, 2, 2, 2, 400, 250, 2)
+            new Apartment (1,  1,  2, 2, 400, 250,  1 ),
+            new Apartment (2,  2,  2, 2, 400, 250,  1 ),
+            new Apartment (1,  1,  2, 2, 400, 250,  2 ),
+            new Apartment (2,  2,  2, 2, 400, 250,  2 )
         );
         modelBuilder.Entity<Resident>().HasData(
-            new Resident(1,"Austris", "Labinieks", "888888-88888", "05-09-1999", "2222222", "epasts@inbox.com", 1),
-            new Resident(2,"Janis", "Paradnieks", "888888-88888", "05-09-1999", "2222222", "epasts@inbox.com", 2),
-            new Resident(3,"Ivars", "Ozols", "888888-88888", "05-09-1999", "2222222", "epasts@inbox.com", 3),
-            new Resident(4,"Grikis", "Risins", "888888-88888", "05-09-1999", "2222222", "epasts@inbox.com", 4)
+            new Resident("Austris", "Labinieks", "888888-88888", "05-09-1999", "2222222", "epasts@inbox.com",false),
+            new Resident("Janis", "Paradnieks", "888888-88888", "05-09-1999", "2222222", "epasts@inbox.com", false),
+            new Resident("Ivars", "Ozols", "888888-88888", "05-09-1999", "2222222", "epasts@inbox.com", false),
+            new Resident("Grikis", "Risins", "888888-88888", "05-09-1999", "2222222", "epasts@inbox.com", true)
         );
     }
 }
