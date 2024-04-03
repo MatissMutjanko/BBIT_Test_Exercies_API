@@ -10,6 +10,16 @@ public class ApartmentStorage
         return _apartments.FirstOrDefault(apartment => apartment.Number == number);
     }
 
+    public static bool IsApartmentUnique(Apartment apartment)
+    {
+        if (_apartments.Any(a => a.Number == apartment.Number))
+        {
+            return false;
+        }
+
+        return true;
+    }
+
     public static void AddApartment(Apartment apartment)
     {
         _apartments.Add(apartment);
@@ -27,7 +37,6 @@ public class ApartmentStorage
         {
             existingApartment.Floor = apartment.Floor;
             existingApartment.NumberOfRooms = apartment.NumberOfRooms;
-            existingApartment.NumberOfResidents = apartment.NumberOfResidents;
             existingApartment.FloorSpace = apartment.FloorSpace;
             existingApartment.LivingSpace = apartment.LivingSpace;
             existingApartment.House = apartment.House;

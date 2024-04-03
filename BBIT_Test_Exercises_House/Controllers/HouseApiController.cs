@@ -1,3 +1,5 @@
+using AutoMapper;
+using BBIT_Test_Exercises_House.DTOs;
 using BBIT_Test_Exercises_House.Storage;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
@@ -8,6 +10,14 @@ namespace BBIT_Test_Exercises_House.Controllers;
 [ApiController]
 public class HouseApiController : ControllerBase
 {
+    private readonly IMapper _mapper;
+
+    public HouseApiController(IMapper mapper)
+    {
+        _mapper = mapper;
+    }
+
+
     [HttpPut]
     [Route("house")]
     public IActionResult AddHouse(House house)
@@ -16,24 +26,26 @@ public class HouseApiController : ControllerBase
         {
             return Conflict();
         }
+
+        var hosueViewModel = _mapper.Map<HouseViewModel>(house);
+
         HouseStorage.AddHouse(house);
-        return Created("", house);
+        return Created("", hosueViewModel);
     }
 
     [HttpGet]
     [Route("house/{number}")]
     public IActionResult GetHouse(int number)
     {
-        var id = 1;
         var house = HouseStorage.GetHouseByNumber(number);
         if (house == null)
         {
-            var houseNew = new House(1, "mellenu", "riga", "Latvija", "1234");
-            id++;
-            return Ok(houseNew);
+            return NotFound();
         }
 
-        return Ok(house);
+        var hosueViewModel = _mapper.Map<HouseViewModel>(house);
+
+        return Ok(hosueViewModel);
     }
 
     [HttpDelete]

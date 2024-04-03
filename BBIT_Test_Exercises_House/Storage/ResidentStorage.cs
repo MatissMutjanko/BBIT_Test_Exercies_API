@@ -9,6 +9,16 @@ public class ResidentStorage
         _residents.Add(resident);
     }
 
+    public static bool IsResidentUnique(Resident resident)
+    {
+        if (_residents.Any(a => a.Name == resident.Name))
+        {
+            return false;
+        }
+
+        return true;
+    }
+
     public static Resident GetByName(string name)
     {
         return _residents.FirstOrDefault(r => r.Name == name);

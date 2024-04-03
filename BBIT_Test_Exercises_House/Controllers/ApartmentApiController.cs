@@ -1,3 +1,5 @@
+using AutoMapper;
+using BBIT_Test_Exercises_House.DTOs;
 using BBIT_Test_Exercises_House.Storage;
 using Microsoft.AspNetCore.Mvc;
 
@@ -7,28 +9,41 @@ namespace BBIT_Test_Exercises_House.Controllers;
 [ApiController]
 public class ApartmentApiController : ControllerBase
 {
-    
+    private readonly IMapper _mapper;
+
+    public ApartmentApiController(IMapper mapper)
+    {
+        _mapper = mapper;
+    }
+
     [HttpPut]
     [Route("apartment")]
     public IActionResult AddApartment(Apartment apartment)
     {
+        if (!ApartmentStorage.IsApartmentUnique(apartment))
+        {
+            return Conflict();
+        }
+
+        var apartmentViewModel = _mapper.Map<ApartmentViewModel>(apartment);
         ApartmentStorage.AddApartment(apartment);
-        return Created("",apartment);
+        return Created("", apartmentViewModel);
     }
-    
+
     [HttpGet]
     [Route("apartment/{number}")]
     public IActionResult GetApartment(int number)
     {
         var apartment = ApartmentStorage.GetApartmentByNumber(number);
+        var apartmentViewModel = _mapper.Map<ApartmentViewModel>(apartment);
         if (apartment == null)
         {
             return NotFound();
         }
 
-        return Ok(apartment);
+        return Ok(apartmentViewModel);
     }
-    
+
     [HttpDelete]
     [Route("apartment/{number}")]
     public IActionResult DeleteApartment(int number)
@@ -38,9 +53,11 @@ public class ApartmentApiController : ControllerBase
         {
             return NotFound();
         }
+
         ApartmentStorage.DeleteApartment(apartmentToDelete);
         return Ok();
     }
+
 //given appartment number it will change all the other variables as writen in body.
     [HttpPost]
     [Route("apartment/{number}")]
@@ -51,8 +68,8 @@ public class ApartmentApiController : ControllerBase
         {
             return NotFound();
         }
-        ApartmentStorage.EditApartment(number,updatedApartmentData);
+
+        ApartmentStorage.EditApartment(number, updatedApartmentData);
         return Ok();
     }
-
 }

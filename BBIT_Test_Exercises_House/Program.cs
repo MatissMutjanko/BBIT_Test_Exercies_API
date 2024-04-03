@@ -1,5 +1,8 @@
+using System.Reflection;
 using BBIT_Test_Exercises_House.Components;
 using BBIT_Test_Exercises_House.DbContext;
+using AutoMapper;
+using BBIT_Test_Exercises_House.Mapper;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,6 +11,16 @@ builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
+var assembly = Assembly.GetExecutingAssembly();
+builder.Services.AddAutoMapper(assembly);
+
+// Configure AutoMapper
+var mapperConfig = new MapperConfiguration(cfg =>
+{
+    cfg.AddProfile<MappingProfile>();
+});
+var mapper = mapperConfig.CreateMapper();
+builder.Services.AddSingleton<IMapper>(mapper);
 
 
 var app = builder.Build();
