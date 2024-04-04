@@ -1,17 +1,25 @@
+using BBIT_Test_Exercises_House.DbContext;
+
 namespace BBIT_Test_Exercises_House.Storage;
 
 public class ResidentStorage
 {
-    public static List<Resident> _residents = new List<Resident>();
+    private static AppDbContext _dbContext;
+
+    public ResidentStorage(AppDbContext dbContext)
+    {
+        _dbContext = dbContext;
+    }
 
     public static void AddResident(Resident resident)
     {
-        _residents.Add(resident);
+        _dbContext.Residents.Add(resident);
+        _dbContext.SaveChanges();
     }
 
     public static bool IsResidentUnique(Resident resident)
     {
-        if (_residents.Any(a => a.Name == resident.Name))
+        if (_dbContext.Residents.Any(a => a.Name == resident.Name))
         {
             return false;
         }
@@ -21,21 +29,22 @@ public class ResidentStorage
 
     public static Resident GetByName(string name)
     {
-        return _residents.FirstOrDefault(r => r.Name == name);
+        return _dbContext.Residents.FirstOrDefault(r => r.Name == name);
     }
 
     public static void RemoveResident(Resident resident)
     {
-        var residentToRemove = _residents.FirstOrDefault(r => r.Name == resident.Name);
+        var residentToRemove = _dbContext.Residents.FirstOrDefault(r => r.Name == resident.Name);
         if (residentToRemove != null)
         {
-            _residents.Remove(residentToRemove);
+            _dbContext.Residents.Remove(residentToRemove);
+            _dbContext.SaveChanges();
         }
     }
 
     public static void EditResident(Resident resident)
     {
-        var residentToEdit = _residents.FirstOrDefault(r => r.Name == resident.Name);
+        var residentToEdit = _dbContext.Residents.FirstOrDefault(r => r.Name == resident.Name);
         if (residentToEdit != null)
         {
             residentToEdit.Name = resident.Name;
@@ -44,6 +53,7 @@ public class ResidentStorage
             residentToEdit.PhoneNumber = resident.PhoneNumber;
             residentToEdit.Surname = resident.Surname;
             residentToEdit.DateOfBirth = resident.DateOfBirth;
+            _dbContext.SaveChanges();
         }
     }
 }

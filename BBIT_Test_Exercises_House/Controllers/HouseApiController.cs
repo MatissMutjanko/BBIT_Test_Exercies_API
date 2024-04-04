@@ -1,7 +1,6 @@
 using AutoMapper;
 using BBIT_Test_Exercises_House.DTOs;
 using BBIT_Test_Exercises_House.Storage;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BBIT_Test_Exercises_House.Controllers;
@@ -16,7 +15,6 @@ public class HouseApiController : ControllerBase
     {
         _mapper = mapper;
     }
-
 
     [HttpPut]
     [Route("house")]

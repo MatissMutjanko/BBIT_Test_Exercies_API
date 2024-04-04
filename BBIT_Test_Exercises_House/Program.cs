@@ -2,6 +2,7 @@ using System.Reflection;
 using BBIT_Test_Exercises_House.Components;
 using BBIT_Test_Exercises_House.DbContext;
 using AutoMapper;
+using BBIT_Test_Exercises_House.Controllers;
 using BBIT_Test_Exercises_House.Mapper;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,6 +14,10 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 var assembly = Assembly.GetExecutingAssembly();
 builder.Services.AddAutoMapper(assembly);
+builder.Services.AddSingleton<ResidentApiController>();
+builder.Services.AddSingleton<HouseApiController>();
+builder.Services.AddSingleton<ApartmentApiController>();
+builder.Services.AddSingleton<AppDbContext>();
 
 // Configure AutoMapper
 var mapperConfig = new MapperConfiguration(cfg =>
@@ -24,7 +29,6 @@ builder.Services.AddSingleton<IMapper>(mapper);
 
 
 var app = builder.Build();
-var Db = new AppDbContext();
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

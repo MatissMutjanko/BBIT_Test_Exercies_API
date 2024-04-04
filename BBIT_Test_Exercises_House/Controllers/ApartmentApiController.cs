@@ -58,7 +58,6 @@ public class ApartmentApiController : ControllerBase
         return Ok();
     }
 
-//given appartment number it will change all the other variables as writen in body.
     [HttpPost]
     [Route("apartment/{number}")]
     public IActionResult EditApartment(int number, [FromBody] Apartment updatedApartmentData)
