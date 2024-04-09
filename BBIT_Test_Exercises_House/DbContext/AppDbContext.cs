@@ -27,11 +27,6 @@ public class AppDbContext : Microsoft.EntityFrameworkCore.DbContext
         optionsBuilder.UseSqlite("Data Source=AppDbContext.db");
     }
 
-    public AppDbContext()
-    {
-        this.Database.EnsureCreated();
-    }
-
     private void SeedData(ModelBuilder modelBuilder)
     {
         var apartments = new List<Apartment>

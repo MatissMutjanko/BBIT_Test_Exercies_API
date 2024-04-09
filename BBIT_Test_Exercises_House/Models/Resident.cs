@@ -16,9 +16,7 @@ public class Resident
     public string DateOfBirth { get; set; }
     public string PhoneNumber { get; set; }
     public string Email { get; set; }
-    
-    [JsonIgnore]
-    public List<Apartment> Apartments { get; set; }
+    public ICollection<Apartment> Apartments { get; set; } = new List<Apartment>();
 
     public Resident()
     {

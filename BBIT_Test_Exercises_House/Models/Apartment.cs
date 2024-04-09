@@ -16,8 +16,8 @@ public class Apartment
     public int LivingSpace { get; set; }
     public int HouseId { get; set; }
     public House House { get; set; }
-    [JsonIgnore]
-    public List<Resident> Residents { get; set; }
+
+    public ICollection<Resident> Residents { get; set; } = new List<Resident>();
     
     public Apartment()
     {
