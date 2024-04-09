@@ -1,6 +1,6 @@
 namespace BBIT_Test_Exercises_House.DTOs;
 
-public class ApartmentViewModel
+public class ApartmentDto
 {
     public int Number { get; set; }
     public int Floor { get; set; }

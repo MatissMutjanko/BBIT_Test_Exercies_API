@@ -5,58 +5,76 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BBIT_Test_Exercises_House.Controllers;
 
-[Route("admin-api")]
+[Route("house")]
 [ApiController]
 public class HouseApiController : ControllerBase
 {
     private readonly IMapper _mapper;
+    private readonly HouseService _houseService;
 
     public HouseApiController(IMapper mapper)
     {
         _mapper = mapper;
     }
 
-    [HttpPut]
-    [Route("house")]
+    [HttpPost]
+    [Route("add")]
     public IActionResult AddHouse(House house)
     {
-        if (HouseStorage.GetHouseByNumber(house.Number) != null)
+        if (_houseService.GetById(house.Id) != null)
         {
             return Conflict();
         }
 
-        var hosueViewModel = _mapper.Map<HouseViewModel>(house);
+        var hosueViewModel = _mapper.Map<HouseDto>(house);
 
-        HouseStorage.AddHouse(house);
+        _houseService.Add(house);
         return Created("", hosueViewModel);
     }
 
     [HttpGet]
-    [Route("house/{number}")]
+    [Route("get/{number}")]
     public IActionResult GetHouse(int number)
     {
-        var house = HouseStorage.GetHouseByNumber(number);
+        var house = _houseService.GetById(number);
         if (house == null)
         {
             return NotFound();
         }
 
-        var hosueViewModel = _mapper.Map<HouseViewModel>(house);
+        var hosueViewModel = _mapper.Map<HouseDto>(house);
 
         return Ok(hosueViewModel);
     }
 
     [HttpDelete]
-    [Route("house/{number}")]
-    public IActionResult DeleteHouse(int number)
+    [Route("delete/{id}")]
+    public IActionResult DeleteHouse(int id)
     {
-        var houseToDelete = HouseStorage.GetHouseByNumber(number);
+        var houseToDelete = _houseService.GetById(id);
         if (houseToDelete == null)
         {
             return NotFound();
         }
 
-        HouseStorage.DeleteHouse(houseToDelete);
+        _houseService.Delete(houseToDelete);
         return Ok();
+    }
+
+    //given hosue id it will change all the other variables as writen in body.
+    [HttpPut]
+    [Route("edit/{house}")]
+    public IActionResult EditApartment([FromBody] House house)
+    {
+        var houseToEdit = _houseService.GetById(house.Id);
+        if (houseToEdit == null)
+        {
+            return NotFound();
+        }
+
+        _houseService.EditHouse(houseToEdit.Id, houseToEdit);
+        var residentViewModel = _mapper.Map<ResidentDto>(houseToEdit);
+
+        return Ok(residentViewModel);
     }
 }

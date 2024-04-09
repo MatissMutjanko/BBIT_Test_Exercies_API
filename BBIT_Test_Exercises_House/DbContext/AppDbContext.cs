@@ -8,66 +8,40 @@ public class AppDbContext : Microsoft.EntityFrameworkCore.DbContext
     public DbSet<Apartment> Apartments { get; set; }
     public DbSet<Resident> Residents { get; set; }
 
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    { 
+        modelBuilder.Entity<Resident>()
+            .HasMany(r => r.Apartments)
+            .WithMany(a => a.Residents);
+
+        modelBuilder.Entity<Apartment>()
+            .HasOne(a => a.House)
+            .WithMany(h => h.Apartments)
+            .HasForeignKey(a => a.HouseId);
+
+        SeedData(modelBuilder);
+    }
+
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        optionsBuilder.UseSqlite("Data Source=AppDbContext.db");
+    }
 
     public AppDbContext()
     {
         this.Database.EnsureCreated();
     }
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    private void SeedData(ModelBuilder modelBuilder)
     {
-        optionsBuilder.UseSqlite("Data Source=HousesDbContext.db");
-    }
-
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
-        // Call SeedData method to seed initial data
-        SeedData(modelBuilder);
-    }
-
-    public void SeedData(ModelBuilder modelBuilder)
-    {
-        // Add initial data using Entity Framework Core APIs
-        modelBuilder.Entity<House>().HasData(
-            new House
-            {
-                Id = 1,
-                Number = 2,
-                Street = "street",
-                City = "city",
-                Country = "country",
-                PostalIndex = "1234",
-                ApartmentIds = { 1, 2 }
-            },
-            new House
-            {
-                Id = 2,
-                Number = 2,
-                Street = "street",
-                City = "city",
-                Country = "country",
-                PostalIndex = "1234",
-                ApartmentIds = { 1, 2 }
-            },
-            new House
-            {
-                Id = 3,
-                Number = 2,
-                Street = "street",
-                City = "city",
-                Country = "country",
-                PostalIndex = "1234",
-                ApartmentIds = { 1, 2 }
-            }
-        );
-        modelBuilder.Entity<Apartment>().HasData(
+        var apartments = new List<Apartment>
+        {
             new Apartment
             {
                 Id = 1,
                 Number = 1,
                 Floor = 1,
                 NumberOfRooms = 2,
-                ResidentsIds = new List<int> { 1, 2 },
                 FloorSpace = 400,
                 LivingSpace = 250,
                 HouseId = 1
@@ -78,7 +52,6 @@ public class AppDbContext : Microsoft.EntityFrameworkCore.DbContext
                 Number = 1,
                 Floor = 1,
                 NumberOfRooms = 2,
-                ResidentsIds = new List<int> { 1, 2 },
                 FloorSpace = 400,
                 LivingSpace = 250,
                 HouseId = 1
@@ -89,7 +62,6 @@ public class AppDbContext : Microsoft.EntityFrameworkCore.DbContext
                 Number = 1,
                 Floor = 1,
                 NumberOfRooms = 2,
-                ResidentsIds = new List<int> { 1, 2 },
                 FloorSpace = 400,
                 LivingSpace = 250,
                 HouseId = 1
@@ -100,61 +72,91 @@ public class AppDbContext : Microsoft.EntityFrameworkCore.DbContext
                 Number = 1,
                 Floor = 1,
                 NumberOfRooms = 2,
-                ResidentsIds = new List<int> { 1, 2 },
                 FloorSpace = 400,
                 LivingSpace = 250,
                 HouseId = 1
             }
-        );
-        modelBuilder.Entity<Resident>().HasData(
+        };
+
+        modelBuilder.Entity<Apartment>().HasData(apartments);
+
+        var houses = new List<House>
+        {
+            new House
+            {
+                Id = 5,
+                Number = 2,
+                Street = "street",
+                City = "city",
+                Country = "country",
+                PostalIndex = "1234",
+            },
+            new House
+            {
+                Id = 6,
+                Number = 2,
+                Street = "street",
+                City = "city",
+                Country = "country",
+                PostalIndex = "1234",
+            },
+            new House
+            {
+                Id = 7,
+                Number = 2,
+                Street = "street",
+                City = "city",
+                Country = "country",
+                PostalIndex = "1234",
+            }
+        };
+
+        modelBuilder.Entity<House>().HasData(houses);
+
+        var residents = new List<Resident>
+        {
             new Resident
             {
-                Id = 1,
+                Id = 8,
                 Name = "Austris",
                 Surname = "Paradnieks",
                 PersonalId = "999999-99999",
                 DateOfBirth = "09-05-1999",
                 PhoneNumber = "22222222",
-                Email = "epasts@Inbox.lv",
-                ApartmentIds = new List<int> { 1, 2, 3 },
-                IsOwner = false
+                Email = "epasts@Inbox.lv"
             },
             new Resident
             {
-                Id = 2,
+                Id = 9,
                 Name = "Verners",
                 Surname = "Calis",
                 PersonalId = "999999-99999",
                 DateOfBirth = "09-05-1999",
                 PhoneNumber = "22222222",
-                Email = "epasts@Inbox.lv",
-                ApartmentIds = new List<int> { 1, 2, 3 },
-                IsOwner = false
-            }, 
+                Email = "epasts@Inbox.lv"
+            },
             new Resident
             {
-                Id = 3,
+                Id = 10,
                 Name = "Latvietis",
                 Surname = "uzvards",
                 PersonalId = "999999-99999",
                 DateOfBirth = "09-05-1999",
                 PhoneNumber = "22222222",
-                Email = "epasts@Inbox.lv",
-                ApartmentIds = new List<int> { 1, 2, 3 },
-                IsOwner = false
-            }, 
+                Email = "epasts@Inbox.lv"
+            },
             new Resident
             {
-                Id = 4,
+                Id = 11,
                 Name = "Pauls",
                 Surname = "Janis",
                 PersonalId = "999999-99999",
                 DateOfBirth = "09-05-1999",
                 PhoneNumber = "22222222",
-                Email = "epasts@Inbox.lv",
-                ApartmentIds = new List<int> { 1, 2, 3 },
-                IsOwner = false
+                Email = "epasts@Inbox.lv"
             }
-        );
+        };
+
+        modelBuilder.Entity<Resident>().HasData(residents);
     }
 }

@@ -1,6 +1,6 @@
 namespace BBIT_Test_Exercises_House.DTOs;
 
-public class ResidentViewModel
+public class ResidentDto
 {
     public string Name { get; set; }
     public string Surname { get; set; }

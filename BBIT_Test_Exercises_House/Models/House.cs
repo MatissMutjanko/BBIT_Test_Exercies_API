@@ -1,32 +1,39 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Newtonsoft.Json;
+using NuGet.Packaging;
 
 namespace BBIT_Test_Exercises_House;
 
 public class House
 {
+    [Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int Id { get; set; }
     public int Number { get; set; }
     public string Street { get; set; }
     public string City { get; set; }
     public string Country { get; set; }
     public string PostalIndex { get; set; }
-    public List<int> ApartmentIds { get; set; } = new List<int>();
-
+    
+    [ForeignKey("Apartment")]
+    public int? ApartmentId { get; set; }
+    
+    [JsonIgnore]
+    public ICollection<Apartment> Apartments { get; set; }
     public House()
     {
+        Apartments = new List<Apartment>();
     }
 
-    public House(int id, int number, string street, string city, string country, string postalIndex,
-        IEnumerable<int> apartmentIds)
+    public House(int number, string street, string city, string country, string postalIndex,
+        List<Apartment> apartments)
     {
-        Id = id;
         Number = number;
         Street = street;
         City = city;
         Country = country;
         PostalIndex = postalIndex;
-        ApartmentIds.AddRange(apartmentIds);
+        Apartments = apartments;
     }
 }

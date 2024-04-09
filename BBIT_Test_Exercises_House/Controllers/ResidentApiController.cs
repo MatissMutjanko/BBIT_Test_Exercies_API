@@ -5,73 +5,75 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BBIT_Test_Exercises_House.Controllers;
 
-[Route("resident-api")]
+[Route("resident")]
 [ApiController]
 public class ResidentApiController : ControllerBase
 {
     private readonly IMapper _mapper;
+    private readonly ResidentService _residentService;
 
-    public ResidentApiController(IMapper mapper)
+    public ResidentApiController(IMapper mapper, ResidentService residentService)
     {
         _mapper = mapper;
+        _residentService = residentService;
     }
 
-    [HttpPut]
-    [Route("resident")]
+    [HttpPost]
+    [Route("add")]
     public IActionResult AddResident(Resident resident)
     {
-        if (!ResidentStorage.IsResidentUnique(resident))
+        if (!_residentService.IsResidentUnique(resident))
         {
             return Conflict();
         }
 
-        var residentViewModel = _mapper.Map<ResidentViewModel>(resident);
+        var residentViewModel = _mapper.Map<ResidentDto>(resident);
 
-        ResidentStorage.AddResident(resident);
+        _residentService.Add(resident);
         return Created("", residentViewModel);
     }
 
     [HttpGet]
-    [Route("resident/{name}")]
+    [Route("get/{name}")]
     public IActionResult GetResident(string name)
     {
-        var resident = ResidentStorage.GetByName(name);
+        var resident = _residentService.GetByName(name);
         if (resident == null)
         {
             return NotFound();
         }
 
-        var residentViewModel = _mapper.Map<ResidentViewModel>(resident);
+        var residentViewModel = _mapper.Map<ResidentDto>(resident);
         return Ok(residentViewModel);
     }
 
     [HttpDelete]
-    [Route("resident/{name}")]
+    [Route("delete/{name}")]
     public IActionResult DeleteResident(string name)
     {
-        var residenToRemove = ResidentStorage.GetByName(name);
+        var residenToRemove = _residentService.GetByName(name);
         if (residenToRemove == null)
         {
             return NotFound();
         }
 
-        ResidentStorage.RemoveResident(residenToRemove);
+        _residentService.Delete(residenToRemove);
         return Ok();
     }
 
     //given resident name it will change all the other variables as writen in body.
-    [HttpPost]
-    [Route("resident/{resident}")]
+    [HttpPut]
+    [Route("edit/{resident}")]
     public IActionResult EditApartment([FromBody] Resident resident)
     {
-        var residentToEdit = ResidentStorage.GetByName(resident.Name);
+        var residentToEdit = _residentService.GetByName(resident.Name);
         if (residentToEdit == null)
         {
             return NotFound();
         }
 
-        ResidentStorage.EditResident(residentToEdit);
-        var residentViewModel = _mapper.Map<ResidentViewModel>(residentToEdit);
+        _residentService.EditResident(residentToEdit);
+        var residentViewModel = _mapper.Map<ResidentDto>(residentToEdit);
 
         return Ok(residentViewModel);
     }

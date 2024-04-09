@@ -7,8 +7,8 @@ public class MappingProfile : Profile
 {
     public MappingProfile()
     {
-        CreateMap<Apartment, ApartmentViewModel>();
-        CreateMap<Resident, ResidentViewModel>();
-        CreateMap<House, HouseViewModel>();
+        CreateMap<Apartment, ApartmentDto>();
+        CreateMap<Resident, ResidentDto>();
+        CreateMap<House, HouseDto>();
     }
 }
