@@ -2,7 +2,7 @@ using BBIT_Test_Exercises_House.DbContext;
 
 namespace BBIT_Test_Exercises_House.Storage;
 
-public class ApartmentService : EntityService<Apartment>
+public class ApartmentService : EntityService<Apartment>, IApartmentService
 {
     
     public ApartmentService(AppDbContext dbContext) : base(dbContext)

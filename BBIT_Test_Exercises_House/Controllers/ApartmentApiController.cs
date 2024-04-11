@@ -10,11 +10,12 @@ namespace BBIT_Test_Exercises_House.Controllers;
 public class ApartmentApiController : ControllerBase
 {
     private readonly IMapper _mapper;
-    private readonly ApartmentService _apartmentService;
+    private readonly IApartmentService _apartmentService;
 
-    public ApartmentApiController(IMapper mapper)
+    public ApartmentApiController(IMapper mapper, IApartmentService apartmentService)
     {
         _mapper = mapper;
+        _apartmentService = apartmentService;
     }
 
     [HttpPost]
@@ -35,12 +36,12 @@ public class ApartmentApiController : ControllerBase
     [Route("apartment/{id}")]
     public IActionResult GetApartment(int id)
     {
-        var apartment = _apartmentService.GetById(id);
-        var apartmentViewModel = _mapper.Map<ApartmentDto>(apartment);
+        var apartment = _apartmentService.GetById(id);// trows null reference exception but i dont want it to do that...
         if (apartment == null)
         {
             return NotFound();
         }
+        var apartmentViewModel = _mapper.Map<ApartmentDto>(apartment);
 
         return Ok(apartmentViewModel);
     }

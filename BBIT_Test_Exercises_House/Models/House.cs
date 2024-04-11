@@ -16,7 +16,7 @@ public class House
     public string Country { get; set; }
     public string PostalIndex { get; set; }
 
-    public ICollection<Apartment> Apartments { get; set; } = new List<Apartment>();
+    public ICollection<Apartment>? Apartments { get; set; }
     
     public House() { }
 

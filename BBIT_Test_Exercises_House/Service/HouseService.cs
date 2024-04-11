@@ -2,7 +2,7 @@ using BBIT_Test_Exercises_House.DbContext;
 
 namespace BBIT_Test_Exercises_House.Storage;
 
-public class HouseService : EntityService<House>
+public class HouseService : EntityService<House>, IHouseService
 {
     
     public HouseService(AppDbContext dbContext) : base(dbContext)
@@ -18,7 +18,6 @@ public class HouseService : EntityService<House>
             existingHouse.City = house.City;
             existingHouse.Country = house.Country;
             existingHouse.Street = house.Street;
-            existingHouse.Apartments = house.Apartments;
             existingHouse.PostalIndex = house.PostalIndex;
             _dbContext.SaveChanges();
         }

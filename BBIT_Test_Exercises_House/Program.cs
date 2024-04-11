@@ -58,7 +58,9 @@ void RegisterServices(IServiceCollection services)
     services.AddSingleton<HouseApiController>();
     services.AddSingleton<ApartmentApiController>();
     services.AddSingleton<AppDbContext>();
-    services.AddSingleton<ResidentService>();
+    services.AddSingleton<IResidentService,ResidentService>();
+    services.AddSingleton<IApartmentService,ApartmentService>();
+    services.AddSingleton<IHouseService,HouseService>();
 }
 
 void ConfigurePipeline(WebApplication app)

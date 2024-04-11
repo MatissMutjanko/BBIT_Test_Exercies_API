@@ -10,11 +10,12 @@ namespace BBIT_Test_Exercises_House.Controllers;
 public class HouseApiController : ControllerBase
 {
     private readonly IMapper _mapper;
-    private readonly HouseService _houseService;
+    private readonly IHouseService _houseService;
 
-    public HouseApiController(IMapper mapper)
+    public HouseApiController(IMapper mapper,IHouseService houseService)
     {
         _mapper = mapper;
+        _houseService = houseService;
     }
 
     [HttpPost]
@@ -25,10 +26,9 @@ public class HouseApiController : ControllerBase
         {
             return Conflict();
         }
+        _houseService.Add(house);
 
         var hosueViewModel = _mapper.Map<HouseDto>(house);
-
-        _houseService.Add(house);
         return Created("", hosueViewModel);
     }
 

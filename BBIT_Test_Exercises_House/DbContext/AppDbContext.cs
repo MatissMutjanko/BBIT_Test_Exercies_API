@@ -1,6 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-
+using Microsoft.SqlServer;
 
 namespace BBIT_Test_Exercises_House.DbContext;
 
@@ -14,34 +13,24 @@ public class AppDbContext : Microsoft.EntityFrameworkCore.DbContext
     public AppDbContext(IConfiguration configuration)
     {
         _configuration = configuration;
+        // this.Database.EnsureCreated();
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
-    { 
+    {
         SeedData(modelBuilder);
-        
-        modelBuilder.Entity<House>()
-            .HasKey(e => e.Id);
-        modelBuilder.Entity<House>()
-            .HasMany<Apartment>(a => a.Apartments);
-        
-        modelBuilder.Entity<Apartment>()
-            .HasKey(e => e.Id);
-        modelBuilder.Entity<Apartment>()
-            .HasMany<Resident>(r => r.Residents)
-            .WithMany(a => a.Apartments);
-        
-        modelBuilder.Entity<Resident>()
-            .HasKey(e => e.Id);
-        modelBuilder.Entity<Resident>()
-            .HasMany<Apartment>(a => a.Apartments)
-            .WithMany(r => r.Residents);
 
+        modelBuilder.Entity<Apartment>().HasOne(e => e.House)
+            .WithMany(e => e.Apartments)
+            .HasForeignKey(e => e.HouseId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        modelBuilder.Entity<Resident>().HasMany<Apartment>(e => e.Apartments);
     }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder.UseSqlite(_configuration.GetConnectionString("AppDbContextConnection"));
+        optionsBuilder.UseSqlServer(_configuration.GetConnectionString("AppDbContextConnection"));
     }
 
     private void SeedData(ModelBuilder modelBuilder)
@@ -50,76 +39,65 @@ public class AppDbContext : Microsoft.EntityFrameworkCore.DbContext
         {
             new Apartment
             {
-                Id = 1,
-                Number = 1,
-                Floor = 1,
-                NumberOfRooms = 2,
-                FloorSpace = 400,
-                LivingSpace = 250,
-                HouseId = 5
-            },
-            new Apartment
-            {
                 Id = 2,
-                Number = 1,
+                Number = 101,
                 Floor = 1,
                 NumberOfRooms = 2,
                 FloorSpace = 400,
                 LivingSpace = 250,
-                HouseId = 1
+                HouseId = 1,
             },
             new Apartment
             {
                 Id = 3,
-                Number = 1,
+                Number = 404,
                 Floor = 1,
                 NumberOfRooms = 2,
                 FloorSpace = 400,
                 LivingSpace = 250,
-                HouseId = 5
+                HouseId = 1,
             },
             new Apartment
             {
                 Id = 4,
-                Number = 1,
+                Number = 500,
                 Floor = 1,
                 NumberOfRooms = 2,
                 FloorSpace = 400,
                 LivingSpace = 250,
-                HouseId = 5
+                HouseId = 1,
             }
         };
-
         modelBuilder.Entity<Apartment>().HasData(apartments);
 
         var houses = new List<House>
         {
             new House
             {
-                Id = 5,
+                Id = 1,
                 Number = 2,
-                Street = "street",
-                City = "city",
-                Country = "country",
+                Street = "Cesu",
+                City = "Riga",
+                Country = "Latvija",
                 PostalIndex = "1234",
             },
             new House
             {
-                Id = 6,
-                Number = 2,
-                Street = "street",
-                City = "city",
-                Country = "country",
-                PostalIndex = "1234",
+                Id = 2,
+                Number = 5,
+                Street = "Brivibas",
+                City = "Riga",
+                Country = "Latvija",
+                PostalIndex = "4311",
             },
             new House
             {
-                Id = 7,
-                Number = 2,
-                Street = "street",
-                City = "city",
-                Country = "country",
-                PostalIndex = "1234",
+                Id = 3,
+                Number = 60,
+                Street = "Dzelzavas",
+                City = "Riga",
+                Country = "Latvija",
+                PostalIndex = "5424",
             }
         };
 
@@ -135,7 +113,11 @@ public class AppDbContext : Microsoft.EntityFrameworkCore.DbContext
                 PersonalId = "999999-99999",
                 DateOfBirth = "09-05-1999",
                 PhoneNumber = "22222222",
-                Email = "epasts@Inbox.lv"
+                Email = "epasts@Inbox.lv",
+                ApartmentId = 1,
+                IsOwner = true,
+                ApartmentIds = new List<int> {  },
+                OwnedApartmentIds = new List<int> { 1 }
             },
             new Resident
             {
@@ -145,7 +127,11 @@ public class AppDbContext : Microsoft.EntityFrameworkCore.DbContext
                 PersonalId = "999999-99999",
                 DateOfBirth = "09-05-1999",
                 PhoneNumber = "22222222",
-                Email = "epasts@Inbox.lv"
+                Email = "epasts@Inbox.lv",
+                ApartmentId = 2,
+                IsOwner = true,
+                ApartmentIds = new List<int> {  },
+                OwnedApartmentIds = new List<int> { 2 }
             },
             new Resident
             {
@@ -155,7 +141,11 @@ public class AppDbContext : Microsoft.EntityFrameworkCore.DbContext
                 PersonalId = "999999-99999",
                 DateOfBirth = "09-05-1999",
                 PhoneNumber = "22222222",
-                Email = "epasts@Inbox.lv"
+                Email = "epasts@Inbox.lv",
+                ApartmentId = 3,
+                IsOwner = false,
+                ApartmentIds = new List<int> { 3 },
+                OwnedApartmentIds = new List<int> { }
             },
             new Resident
             {
@@ -165,7 +155,11 @@ public class AppDbContext : Microsoft.EntityFrameworkCore.DbContext
                 PersonalId = "999999-99999",
                 DateOfBirth = "09-05-1999",
                 PhoneNumber = "22222222",
-                Email = "epasts@Inbox.lv"
+                Email = "epasts@Inbox.lv",
+                ApartmentId = 3,
+                IsOwner = true,
+                ApartmentIds = new List<int> {  },
+                OwnedApartmentIds = new List<int> { 3 }
             }
         };
 
