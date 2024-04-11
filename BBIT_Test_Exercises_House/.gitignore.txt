@@ -1,0 +1,7 @@
+obj
+Properties
+wwwroot
+appsettings.Development.json
+appsettings.json
+BBIT_Test_Exercises_House.csproj
+BBIT_Test_Exercises_House.csproj.user
