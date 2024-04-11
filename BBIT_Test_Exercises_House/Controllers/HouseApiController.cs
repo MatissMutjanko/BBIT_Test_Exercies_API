@@ -48,7 +48,7 @@ public class HouseApiController : ControllerBase
     }
 
     [HttpDelete]
-    [Route("delete/{id}")]
+    [Route("house/{id}")]
     public IActionResult DeleteHouse(int id)
     {
         var houseToDelete = _houseService.GetById(id);
@@ -63,7 +63,7 @@ public class HouseApiController : ControllerBase
 
     //given hosue id it will change all the other variables as writen in body.
     [HttpPut]
-    [Route("edit/{house}")]
+    [Route("house/{house}")]
     public IActionResult EditApartment([FromBody] House house)
     {
         var houseToEdit = _houseService.GetById(house.Id);
@@ -72,8 +72,8 @@ public class HouseApiController : ControllerBase
             return NotFound();
         }
 
-        _houseService.EditHouse(houseToEdit.Id, houseToEdit);
-        var residentViewModel = _mapper.Map<ResidentDto>(houseToEdit);
+        _houseService.EditHouse(houseToEdit.Id, house);
+        var residentViewModel = _mapper.Map<ResidentDto>(house);
 
         return Ok(residentViewModel);
     }

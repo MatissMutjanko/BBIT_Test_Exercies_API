@@ -18,7 +18,7 @@ public class Resident
     public string Email { get; set; }
     
     [JsonIgnore]
-    public List<Apartment> Apartments { get; set; }
+    public ICollection<Apartment> Apartments { get; set; }
 
     public Resident()
     {

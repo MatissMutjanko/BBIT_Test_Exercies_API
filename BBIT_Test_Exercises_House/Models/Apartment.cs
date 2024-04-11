@@ -15,16 +15,18 @@ public class Apartment
     public int FloorSpace { get; set; }
     public int LivingSpace { get; set; }
     public int HouseId { get; set; }
+
     public House House { get; set; }
+    
     [JsonIgnore]
-    public List<Resident> Residents { get; set; }
+    public ICollection<Resident> Residents { get; set; }
     
     public Apartment()
     {
     }
 
     public Apartment(int number, int floor, int numberOfRooms,int floorSpace,
-        int livingSpace, int houseId)
+        int livingSpace,int houseId)
     {
         Number = number;
         Floor = floor;

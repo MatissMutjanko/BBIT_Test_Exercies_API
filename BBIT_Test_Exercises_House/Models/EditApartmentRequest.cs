@@ -8,5 +8,5 @@ public class EditApartmentRequest
     public int id { get; set; }
 
     [FromBody]
-    public Apartment UpdatedApartmentData { get; set; }
+    public Apartment ApartmentData { get; set; }
 }

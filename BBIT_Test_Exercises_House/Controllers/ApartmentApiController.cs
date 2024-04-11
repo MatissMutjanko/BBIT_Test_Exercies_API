@@ -35,7 +35,7 @@ public class ApartmentApiController : ControllerBase
     [Route("apartment/{id}")]
     public IActionResult GetApartment(int id)
     {
-        var apartment = _apartmentService.GetApartmentById(id);
+        var apartment = _apartmentService.GetById(id);
         var apartmentViewModel = _mapper.Map<ApartmentDto>(apartment);
         if (apartment == null)
         {
@@ -49,7 +49,7 @@ public class ApartmentApiController : ControllerBase
     [Route("apartment/{id}")]
     public IActionResult DeleteApartment(int id)
     {
-        var apartmentToDelete = _apartmentService.GetApartmentById(id);
+        var apartmentToDelete = _apartmentService.GetById(id);
         if (apartmentToDelete == null)
         {
             return NotFound();
@@ -64,14 +64,14 @@ public class ApartmentApiController : ControllerBase
     public IActionResult EditApartment([FromBody] EditApartmentRequest request)
     {
         int id = request.id;
-        Apartment updatedApartmentData = request.UpdatedApartmentData;
+        Apartment updatedApartmentData = request.ApartmentData;
         
-        var apartmentToEdit = _apartmentService.GetApartmentById(request.id);
+        var apartmentToEdit = _apartmentService.GetById(request.id);
         if (apartmentToEdit == null)
         {
             return NotFound();
         }
-        _apartmentService.EditApartment(request.id, request.UpdatedApartmentData);
+        _apartmentService.EditApartment(request.id, request.ApartmentData);
 
         return Ok();
     }

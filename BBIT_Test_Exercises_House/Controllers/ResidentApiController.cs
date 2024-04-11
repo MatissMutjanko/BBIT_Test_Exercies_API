@@ -72,8 +72,8 @@ public class ResidentApiController : ControllerBase
             return NotFound();
         }
 
-        _residentService.EditResident(residentToEdit);
-        var residentViewModel = _mapper.Map<ResidentDto>(residentToEdit);
+        _residentService.EditResident(resident);
+        var residentViewModel = _mapper.Map<ResidentDto>(resident);
 
         return Ok(residentViewModel);
     }

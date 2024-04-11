@@ -1,4 +1,6 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+
 
 namespace BBIT_Test_Exercises_House.DbContext;
 
@@ -7,24 +9,39 @@ public class AppDbContext : Microsoft.EntityFrameworkCore.DbContext
     public DbSet<House> Houses { get; set; }
     public DbSet<Apartment> Apartments { get; set; }
     public DbSet<Resident> Residents { get; set; }
+    private readonly IConfiguration _configuration;
+
+    public AppDbContext(IConfiguration configuration)
+    {
+        _configuration = configuration;
+    }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     { 
-        modelBuilder.Entity<Resident>()
-            .HasMany(r => r.Apartments)
-            .WithMany(a => a.Residents);
-
-        modelBuilder.Entity<Apartment>()
-            .HasOne(a => a.House)
-            .WithMany(h => h.Apartments)
-            .HasForeignKey(a => a.HouseId);
-
         SeedData(modelBuilder);
+        
+        modelBuilder.Entity<House>()
+            .HasKey(e => e.Id);
+        modelBuilder.Entity<House>()
+            .HasMany<Apartment>(a => a.Apartments);
+        
+        modelBuilder.Entity<Apartment>()
+            .HasKey(e => e.Id);
+        modelBuilder.Entity<Apartment>()
+            .HasMany<Resident>(r => r.Residents)
+            .WithMany(a => a.Apartments);
+        
+        modelBuilder.Entity<Resident>()
+            .HasKey(e => e.Id);
+        modelBuilder.Entity<Resident>()
+            .HasMany<Apartment>(a => a.Apartments)
+            .WithMany(r => r.Residents);
+
     }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder.UseSqlite("Data Source=AppDbContext.db");
+        optionsBuilder.UseSqlite(_configuration.GetConnectionString("AppDbContextConnection"));
     }
 
     public AppDbContext()
@@ -44,7 +61,7 @@ public class AppDbContext : Microsoft.EntityFrameworkCore.DbContext
                 NumberOfRooms = 2,
                 FloorSpace = 400,
                 LivingSpace = 250,
-                HouseId = 1
+                HouseId = 5
             },
             new Apartment
             {
@@ -64,7 +81,7 @@ public class AppDbContext : Microsoft.EntityFrameworkCore.DbContext
                 NumberOfRooms = 2,
                 FloorSpace = 400,
                 LivingSpace = 250,
-                HouseId = 1
+                HouseId = 5
             },
             new Apartment
             {
@@ -74,7 +91,7 @@ public class AppDbContext : Microsoft.EntityFrameworkCore.DbContext
                 NumberOfRooms = 2,
                 FloorSpace = 400,
                 LivingSpace = 250,
-                HouseId = 1
+                HouseId = 5
             }
         };
 

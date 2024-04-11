@@ -4,11 +4,9 @@ namespace BBIT_Test_Exercises_House.Storage;
 
 public class ResidentService : EntityService<Resident>
 {
-    private readonly AppDbContext _dbContext;
 
     public ResidentService(AppDbContext dbContext) : base(dbContext)
     {
-        _dbContext = dbContext;
     }
 
     public bool IsResidentUnique(Resident resident)

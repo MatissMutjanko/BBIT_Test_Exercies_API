@@ -28,5 +28,12 @@ namespace BBIT_Test_Exercises_House.Storage
             _dbContext.Set<TEntity>().Remove(entity);
             _dbContext.SaveChanges();
         }
+
+        public virtual void Edit(TEntity entity)
+        {
+            _dbContext.Set<TEntity>().Update(entity);
+            _dbContext.SaveChanges();
+
+        }
     }
 }

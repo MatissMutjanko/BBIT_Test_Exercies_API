@@ -4,21 +4,14 @@ namespace BBIT_Test_Exercises_House.Storage;
 
 public class ApartmentService : EntityService<Apartment>
 {
-    private readonly AppDbContext _dbContext;
-
+    
     public ApartmentService(AppDbContext dbContext) : base(dbContext)
     {
-        _dbContext = dbContext;
-    }
-
-    public Apartment GetApartmentById(int id)
-    {
-        return _dbContext.Apartments.FirstOrDefault(apartment => apartment.Id == id);
     }
 
     public bool IsThereADuplicateApartment(Apartment apartment)
     {
-        if (_dbContext.Apartments.Any(a => a.Number == apartment.Number && a.HouseId == apartment.HouseId))
+        if (_dbContext.Apartments.Any(a => a.Id == apartment.Id && a.Id == apartment.Id))
         {
             return true;
         }
@@ -36,7 +29,7 @@ public class ApartmentService : EntityService<Apartment>
             existingApartment.FloorSpace = apartment.FloorSpace;
             existingApartment.LivingSpace = apartment.LivingSpace;
             existingApartment.House = apartment.House;
-            _dbContext.SaveChanges();
+            Edit(existingApartment);
         }
     }
 }
