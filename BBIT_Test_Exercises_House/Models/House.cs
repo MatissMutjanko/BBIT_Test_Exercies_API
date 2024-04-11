@@ -15,25 +15,17 @@ public class House
     public string City { get; set; }
     public string Country { get; set; }
     public string PostalIndex { get; set; }
-    
-    [ForeignKey("Apartment")]
-    public int? ApartmentId { get; set; }
-    
-    [JsonIgnore]
-    public ICollection<Apartment> Apartments { get; set; }
-    public House()
-    {
-        Apartments = new List<Apartment>();
-    }
 
-    public House(int number, string street, string city, string country, string postalIndex,
-        List<Apartment> apartments)
+    public ICollection<Apartment> Apartments { get; set; } = new List<Apartment>();
+    
+    public House() { }
+
+    public House(int number, string street, string city, string country, string postalIndex)
     {
         Number = number;
         Street = street;
         City = city;
         Country = country;
         PostalIndex = postalIndex;
-        Apartments = apartments;
     }
 }

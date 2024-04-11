@@ -44,11 +44,6 @@ public class AppDbContext : Microsoft.EntityFrameworkCore.DbContext
         optionsBuilder.UseSqlite(_configuration.GetConnectionString("AppDbContextConnection"));
     }
 
-    public AppDbContext()
-    {
-        this.Database.EnsureCreated();
-    }
-
     private void SeedData(ModelBuilder modelBuilder)
     {
         var apartments = new List<Apartment>
